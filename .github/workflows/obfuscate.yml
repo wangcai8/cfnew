@@ -3,24 +3,26 @@ name: Generate and Obfuscate Worker Script  // 生成并混淆 Worker 脚本
 on:
   workflow_dispatch: // 允许手动触发此工作流
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 * * * *' // 定时触发，0 * * * * 表示每小时执行一次
 
 jobs:
-  build-and-obfuscate:
+  build-and-obfuscate:  // 整个工作流包含一个名为 build-and-obfuscate 的作业，运行在 ubuntu-latest 环境上
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  // 使用 actions/checkout@v4 动作获取当前仓库的代码
 
-      - name: Set up Node.js
+      - name: Set up Node.js  // 使用 actions/setup-node@v4 配置 Node.js 18 版本环境，为后续的 JavaScript 处理做准备
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
-      - name: Install Obfuscator
+      - name: Install Obfuscator  // 通过 npm install javascript-obfuscator 安装 JavaScript 混淆工具
         run: npm install javascript-obfuscator
 
+
+      // 从仓库密钥（secrets.WORKER_SOURCE_CODE）中获取原始代码
       - name: Create source file and obfuscate
         run: |
           node -e "
