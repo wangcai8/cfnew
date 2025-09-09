@@ -1,7 +1,7 @@
-name: Generate and Obfuscate Worker Script
+name: Generate and Obfuscate Worker Script  // 生成并混淆 Worker 脚本
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: // 允许手动触发此工作流
   schedule:
     - cron: '0 * * * *'
 
